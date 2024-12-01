@@ -1,11 +1,10 @@
-import { createKysely } from "database/index.js";
+import { Bindings, edgeBindings } from "@repo/backend-edge/injector";
 
-import {
-  EdgeBindings,
-  bindings as edgeBindings,
-} from "@repo/backend-edge/injector";
+import { createKysely } from "~/database/index.js";
+import { createHashService } from "~/services/hash";
 
-export const bindings = {
+export const nodeBindings = {
   ...edgeBindings,
   createKysely,
-} as const satisfies EdgeBindings;
+  createHashService,
+} as const satisfies Bindings;

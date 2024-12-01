@@ -1,10 +1,39 @@
 import { Pool } from "@neondatabase/serverless";
-import { EdgeBindings } from "injector";
-import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
+import { CamelCasePlugin, Kysely, PostgresDialect, sql } from "kysely";
 import { memo } from "radashi";
 
+import { DB } from "~/database/schema";
+import { UserId } from "~/models";
+import { UserMapper } from "~/models/mappers";
+
 export const createDatabase = (kysely: Kysely<DB>) => {
-  return {};
+  const dbFuncs = {
+    users: {
+      get: async (id: UserId) => {
+        const res = await kysely
+          .selectFrom("users")
+          .selectAll()
+          .where("users.id", "=", id)
+          .executeTakeFirst();
+
+        return res ? UserMapper.toModel(res) : null;
+      },
+    },
+  };
+
+  const transaction = async <T>(fn: (db: typeof dbFuncs) => Promise<T>) => {
+    try {
+      return await kysely.transaction().execute(async (trx) => {
+        await sql`SET CONSTRAINTS ALL DEFERRED`.execute(trx);
+        return await fn(createDatabase(trx));
+      });
+    } catch (e) {
+      // logger.error(e);
+      throw e;
+    }
+  };
+
+  return { ...dbFuncs, transaction };
 };
 
 export const createKysely = memo(() => {
