@@ -18,10 +18,13 @@ const ThemeImage = (props: Props) => {
   );
 };
 
-export default function Home() {
+export default function Home(): React.ReactElement {
   return (
     <div className={styles.page}>
+    {/* // <div className="bg-white">
+    // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-[100svh] p-20 gap-16 [--gray-rgb:0,0,0] [--gray-alpha-200:rgba(var(--gray-rgb),0.08)] [--gray-alpha-100:rgba(var(--gray-rgb),0.05)] [--button-primary-hover:#383838] [--button-secondary-hover:#f2f2f2] font-synthesis-none"> */}
       <main className={styles.main}>
+      {/* <main className="bg-white"> */}
         <ThemeImage
           className={styles.logo}
           srcLight="turborepo-dark.svg"

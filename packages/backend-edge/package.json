@@ -1,0 +1,21 @@
+{
+  "name": "@repo/backend-edge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "drizzle-orm": "^0.36.4",
+    "kysely": "^0.27.4",
+    "radashi": "^12.2.3",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.9.0",
+    "drizzle-kit": "^0.28.1",
+    "typescript": "^5.6.3"
+  },
+  "prettier": "@repo/prettier-config"
+}
