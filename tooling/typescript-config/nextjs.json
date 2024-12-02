@@ -10,7 +10,7 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./"],
-      "@repo/*": ["../../packages/*"],
+      "@repo/*": ["../../packages/*"]
     }
   },
   "exclude": ["node_modules"]
