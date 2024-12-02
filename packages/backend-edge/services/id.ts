@@ -1,10 +1,10 @@
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 
-import { UserId } from "~/models";
-import { HashService } from "~/services/hash";
+import type { UserId } from '~/models';
+import type { HashService } from '~/services/hash';
 
 export const createIdService = (hash: HashService) => {
   return {
-    userId: (): UserId => `u_${hash.hash(nanoid())}`,
+    userId: async (): Promise<UserId> => `u_${await hash.hash(nanoid())}`,
   };
 };

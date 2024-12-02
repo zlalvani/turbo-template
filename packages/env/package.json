@@ -9,9 +9,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
     "@types/node": "^22.9.0",
     "typescript": "^5.6.3"
-  },
-  "prettier": "@repo/prettier-config"
+  }
 }
