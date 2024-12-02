@@ -1,19 +1,19 @@
-import { Pool } from "@neondatabase/serverless";
-import { CamelCasePlugin, Kysely, PostgresDialect, sql } from "kysely";
-import { memo } from "radashi";
+import { Pool } from '@neondatabase/serverless';
+import { CamelCasePlugin, Kysely, PostgresDialect, sql } from 'kysely';
+import { memo } from 'radashi';
 
-import { DB } from "~/database/schema";
-import { UserId } from "~/models";
-import { UserMapper } from "~/models/mappers";
+import type { DB } from '~/database/schema';
+import type { UserId } from '~/models';
+import { UserMapper } from '~/models/mappers';
 
 export const createDatabase = (kysely: Kysely<DB>) => {
   const dbFuncs = {
     users: {
       get: async (id: UserId) => {
         const res = await kysely
-          .selectFrom("users")
+          .selectFrom('users')
           .selectAll()
-          .where("users.id", "=", id)
+          .where('users.id', '=', id)
           .executeTakeFirst();
 
         return res ? UserMapper.toModel(res) : null;

@@ -117,3 +117,12 @@
     @apply bg-background text-foreground min-h-[100dvh];
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
