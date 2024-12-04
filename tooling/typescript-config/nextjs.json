@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./base.json",
   "compilerOptions": {
+    "lib": ["ES2022", "dom", "dom.iterable"],
     "plugins": [{ "name": "next" }],
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -10,8 +11,9 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./"],
-      "@repo/*": ["../../packages/*"],
+      "@repo/*": ["../../packages/*"]
     }
   },
+  "include": [".", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

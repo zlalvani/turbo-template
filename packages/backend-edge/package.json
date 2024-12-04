@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc"
+  },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
     "bs58": "^6.0.0",

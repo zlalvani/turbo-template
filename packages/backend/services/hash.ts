@@ -1,5 +1,5 @@
-import crypto from "crypto";
-import base58 from "bs58";
+import crypto from 'node:crypto';
+import base58 from 'bs58';
 
 const encode = (str: string | Buffer): string =>
   base58.encode(Buffer.from(str));
@@ -9,10 +9,10 @@ export const createHashService = () => {
   return {
     hash: async (...args: string[]) => {
       const hashed = crypto
-        .createHash("sha256")
-        .update(args.join("/"))
+        .createHash('sha256')
+        .update(args.join('/'))
         .digest();
-      return encode(hashed);
+      return await Promise.resolve(encode(hashed));
     },
   };
 };

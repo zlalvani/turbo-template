@@ -3,24 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "pnpm with-env next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "check-types": "tsc --noEmit"
+    "start": "pnpm with-env next start",
+    "check-types": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env -c --"
   },
   "dependencies": {
+    "@repo/backend-edge": "workspace:*",
+    "@repo/design-system": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/ui": "workspace:*",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "@repo/tailwind-config": "workspace:*"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
-    "typescript": "5.5.4"
+    "typescript": "^5.6.3"
   }
 }

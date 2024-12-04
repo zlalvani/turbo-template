@@ -2,6 +2,11 @@
   "name": "@repo/env",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc"
+  },
   "dependencies": {
     "@t3-oss/env-core": "^0.11.1",
     "@t3-oss/env-nextjs": "^0.11.1",
