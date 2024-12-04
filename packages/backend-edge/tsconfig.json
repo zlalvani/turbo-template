@@ -1,11 +1,11 @@
 {
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@repo/typescript-config/internal-package.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["*"]
+      "@repo/backend-edge/*": ["*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build", "dist", ".next", ".expo"]
 }

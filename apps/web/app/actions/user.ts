@@ -11,17 +11,37 @@ const schema = z.object({
   email: z.string().email(),
 });
 
-export async function createUser(prevState: unknown, formData: FormData) {
-  const validated = schema.safeParse(formData);
+export async function createUser(_: unknown, formData: FormData) {
+  const validated = schema.safeParse(Object.fromEntries(formData));
 
   if (!validated.success) {
-    throw new Error('Invalid form data');
+    return {
+      error: {
+        type: 'validation',
+        email: validated.error.flatten().fieldErrors.email,
+        message: 'Validation error',
+      },
+    };
   }
 
   const ids = injectIdService(edgeBindings);
   const db = injectDatabase(edgeBindings);
 
-  await Promise.resolve();
-
-  db.user.get();
+  try {
+    const user = await db.users.create({
+      id: await ids.userId(),
+      email: validated.data.email,
+    });
+    return {
+      success: true,
+      user,
+    };
+  } catch (e) {
+    return {
+      error: {
+        type: 'server',
+        message: 'Failed to create user',
+      },
+    };
+  }
 }

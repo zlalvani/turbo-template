@@ -1,5 +1,5 @@
 import type { Selectable } from 'kysely';
-import type { DB } from '~/database/schema';
+import type { DB } from './../database/schema';
 
 export declare const brand: unique symbol;
 

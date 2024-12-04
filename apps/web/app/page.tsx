@@ -1,12 +1,21 @@
+'use client';
+
 import { Button } from '@repo/design-system/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@repo/design-system/components/ui/card';
+import { Input } from '@repo/design-system/components/ui/input';
+import { Label } from '@repo/design-system/components/ui/label';
+import { toast } from '@repo/design-system/hooks/use-toast';
 import Image, { type ImageProps } from 'next/image';
+import { useRef } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import { createUser } from './actions/user';
 
 type Props = Omit<ImageProps, 'src'> & {
   srcLight: string;
@@ -24,22 +33,74 @@ const ThemeImage = (props: Props) => {
   );
 };
 
-export default function Home(): React.ReactElement {
+function SubmitButton() {
+  const { pending } = useFormStatus();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>Create User</CardTitle>
-          <CardDescription>
-            Click the button below to create a new user.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-center">
-            <Button>Create User</Button>
+    <Button type="submit" disabled={pending}>
+      {pending ? 'Creating...' : 'Create User'}
+    </Button>
+  );
+}
+
+function CreateUserBox() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, formAction] = useFormState(createUser, null);
+
+  const clientAction = (formData: FormData) => {
+    formAction(formData);
+    if (state?.success) {
+      toast({
+        title: 'User Created',
+        description: `Successfully created user: ${state.user.email}`,
+      });
+      formRef.current?.reset();
+    } else if (state?.error) {
+      toast({
+        title: 'Error',
+        description:
+          state.error.type === 'validation'
+            ? state.error.message
+            : 'Failed to create user. Please check the form and try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  return (
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Create User</CardTitle>
+        <CardDescription>
+          Click the button below to create a new user.
+        </CardDescription>
+      </CardHeader>
+      <form ref={formRef} action={clientAction}>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" name="email" type="email" required />
+            {state?.error?.email && (
+              <p className="text-red-500 text-sm">{state.error.message}</p>
+            )}
           </div>
         </CardContent>
-      </Card>
+        <CardFooter>
+          <SubmitButton />
+        </CardFooter>
+      </form>
+      {/* <CardContent>
+        <div className="flex justify-center">
+          <Button>Create User</Button>
+        </div>
+      </CardContent> */}
+    </Card>
+  );
+}
+
+export default function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <CreateUserBox />
     </main>
     // <div>hello</div>
     // <div className={styles.page}>

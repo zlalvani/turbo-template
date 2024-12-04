@@ -1,10 +1,12 @@
 import { Pool } from '@neondatabase/serverless';
+import { config } from '@repo/env';
 import { CamelCasePlugin, Kysely, PostgresDialect, sql } from 'kysely';
 import { memo } from 'radashi';
 
-import type { DB } from '~/database/schema';
-import type { UserId } from '~/models';
-import { UserMapper } from '~/models/mappers';
+import type { DB } from './../database/schema';
+import type { UserId, UserModel } from './../models';
+import { UserMapper } from './../models/mappers';
+import type { Insert } from './types';
 
 export const createDatabase = (kysely: Kysely<DB>) => {
   const dbFuncs = {
@@ -17,6 +19,15 @@ export const createDatabase = (kysely: Kysely<DB>) => {
           .executeTakeFirst();
 
         return res ? UserMapper.toModel(res) : null;
+      },
+      create: async (user: Insert<UserModel>) => {
+        const res = await kysely
+          .insertInto('users')
+          .values(user)
+          .returningAll()
+          .executeTakeFirstOrThrow();
+
+        return UserMapper.toModel(res);
       },
     },
   };
@@ -52,3 +63,4 @@ export const createKysely = memo(() => {
 });
 
 export type Database = ReturnType<typeof createDatabase>;
+export type KyselyInstance = ReturnType<typeof createKysely>;

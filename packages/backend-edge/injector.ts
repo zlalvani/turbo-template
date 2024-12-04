@@ -1,6 +1,6 @@
-import { createDatabase, createKysely } from '~/database/index';
-import { createHashService } from '~/services/hash';
-import { createIdService } from '~/services/id';
+import { createDatabase, createKysely } from './database/index';
+import { createHashService } from './services/hash';
+import { createIdService } from './services/id';
 
 export const edgeBindings = {
   createDatabase,

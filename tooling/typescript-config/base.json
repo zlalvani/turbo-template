@@ -1,8 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "declaration": false,
-    "declarationMap": false,
     "esModuleInterop": true,
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,5 +16,6 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ES2022"
-  }
+  },
+  "exclude": ["node_modules", "build", "dist", ".next", ".expo"]
 }

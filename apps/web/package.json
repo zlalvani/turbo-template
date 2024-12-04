@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "pnpm with-env next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "pnpm with-env next start",
     "check-types": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env -c --"
   },

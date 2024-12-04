@@ -1,4 +1,5 @@
 import type { DB } from '@repo/backend-edge/database/schema';
+import { config } from '@repo/env';
 import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 import { memo } from 'radashi';
